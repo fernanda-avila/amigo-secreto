@@ -1,70 +1,88 @@
-# Getting Started with Create React App
+# 🎁 Secret Santa Gift
+Este projeto é uma aplicação web que facilita a organização de um sorteio de amigo secreto (Secret Santa) de forma prática, permitindo definir participantes e sugestões de presentes. O app também gera um QR code para que os participantes possam escanear e visualizar quem sortearam
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+##  🚀 Funcionalidades
+Sorteio de Amigo Secreto: O app realiza um sorteio entre os participantes, garantindo que ninguém tire a si mesmo.
+Definir Participantes: Os participantes podem ser adicionados ao sorteio.
+Sugestões de Presentes: Permite adicionar sugestões personalizadas de presentes para cada participante.
+Geração de QR Code: O sorteio gera um QR code que pode ser escaneado pelos participantes para ver o resultado.
+Interface amigável: Fácil de usar, com uma interface intuitiva que guia os usuários por todo o processo.
 
-## Available Scripts
+## 🛠️ Tecnologias Utilizadas
 
-In the project directory, you can run:
+React.js: Biblioteca JavaScript para construir interfaces de usuário.
+Styled Components: Para estilização dinâmica e modular dos componentes.
+React QR Code: Utilizado para gerar e exibir QR Codes para os participantes.
+Hooks do React: Para gerenciar estado e efeitos colaterais de forma eficiente.
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 🖥️ Como Rodar o Projeto
+Pré-requisitos
+Node.js instalado na máquina (versão 16+).
+Gerenciador de pacotes npm ou yarn.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Passo a passo
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Clone o repositório
+``
+git clone https://github.com/seu-usuario/amigo-secreto.git
+``
 
-### `npm run build`
+### Navegue até o diretório do projeto
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+``
+cd amigo-secreto
+``
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Instale as dependências
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Com npm:
+``
+npm install
+``
 
-### `npm run eject`
+Com yarn:
+``
+yarn install
+``
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Inicie o servidor de desenvolvimento
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Com npm:
+``
+npm start
+``
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Com yarn:
+``
+yarn start
+``
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Acesse o app no navegador Abra http://localhost:3000 para visualizar o projeto.
 
-## Learn More
+## 📂 Estrutura do Projeto
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+``
+src/
+│
+├── components/
+│   ├── Input.js      # Componente para os campos de entrada de texto
+│   ├── Button.js     # Componente de botão reutilizável
+│   ├── QRCodeModal.js # Modal para exibir o QR Code do sorteio
+│   └── ...
+│
+├── App.js            # Componente principal da aplicação
+├── index.js          # Arquivo principal de inicialização do React
+└── styles.js         # Estilizações globais e dos componentes usando Styled Components
+``
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
+## 📝 Como Funciona
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Adicionar Participantes: Os usuários podem adicionar os participantes do sorteio.
+Definir Regras: É possível definir se algum participante não pode tirar outro específico.
+Valor do Presente: Defina o valor máximo do presente para todos os participantes.
+Sugestões de Presentes: O app permite que cada participante sugira presentes que gostaria de receber.
+Gerar QR Code: Após realizar o sorteio, o app gera um QR Code para que os participantes possam escanear e visualizar o resultado de forma secreta.
+Novo Sorteio: O botão "Novo Sorteio" permite reiniciar o processo e realizar um novo sorteio.
