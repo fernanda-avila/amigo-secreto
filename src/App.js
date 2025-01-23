@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import { QRCodeCanvas } from 'qrcode.react';
-import { createGlobalStyle } from 'styled-components';
 
 // Importando a fonte Roboto
 const GlobalStyle = createGlobalStyle`
@@ -13,7 +12,6 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-// Styled Components
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -26,7 +24,7 @@ const StepContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
+  flex-direction: row;
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 20px;
@@ -44,7 +42,7 @@ const Button = styled.button`
   font-size: 1rem;
   border-radius: 25px;
   border: none;
-  margin-top: 20px;
+  margin-top: -40px;
   cursor: pointer;
   background-color: #4285f4;
   color: white;
@@ -62,14 +60,12 @@ const Button = styled.button`
   }
 `;
 
-
-
 const Card = styled.div`
   padding: 30px;
   border-radius: 10px;
   width: 100%;
   margin-bottom: 20px;
- text-align: center;
+  text-align: center;
 `;
 
 const Label = styled.label`
@@ -87,13 +83,19 @@ const Input = styled.input`
   width: 100%;
   max-width: 500px;
   border: 2px solid #ccc;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   outline: none;
   transition: border-color 0.3s ease;
+  flex-direction: column;
 
   &:focus {
     border-color: #4285f4;
   }
+
+
+  ${({ isSuggestion }) => !isSuggestion && `
+    margin-left: 130px;
+  `}
 `;
 
 const PriceInput = styled.input`
@@ -147,13 +149,32 @@ const ExplanationText = styled.p`
 
 const ImageStep = styled.img`
   width: 40%;
-  max-width: 500px;
-  margin-bottom: 20px;
+  max-width: 400px;
+  margin-bottom: -30px;
   margin-top: 20px;
 `;
 
+const ParticipantList = styled.ul`
+  list-style-type: none;
+  padding: 0;
+  text-align: center;
+`;
+
+const ParticipantItem = styled.li`
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 5px;
+`;
+
+const SuggestionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+`;
+
 const App = () => {
-  const [step, setStep] = useState(0); 
+  const [step, setStep] = useState(0);
   const [yourName, setYourName] = useState('');
   const [currentParticipant, setCurrentParticipant] = useState('');
   const [participants, setParticipants] = useState([]);
@@ -163,7 +184,7 @@ const App = () => {
   const [qrCodeData, setQrCodeData] = useState('');
 
   const handleStart = () => {
-    setStep(1); 
+    setStep(1);
   };
 
   const handleAddParticipant = () => {
@@ -203,7 +224,7 @@ const App = () => {
   };
 
   const handleNewDraw = () => {
-    setStep(0); 
+    setStep(0);
     setYourName('');
     setCurrentParticipant('');
     setParticipants([]);
@@ -266,13 +287,13 @@ const App = () => {
                     Adicionar
                   </Button>
                   <h3>Participantes:</h3>
-                  <ul>
+                  <ParticipantList>
                     {participants.map((participant, index) => (
-                      <li key={index}>{participant}</li>
+                      <ParticipantItem key={index}>{participant}</ParticipantItem>
                     ))}
-                  </ul>
+                  </ParticipantList>
                   <Button onClick={handleNextStep} disabled={participants.length < 2}>
-                    Próximo'
+                    Próximo
                   </Button>
                 </Card>
               </StepContainer>
@@ -283,7 +304,7 @@ const App = () => {
               <StepContainer>
                 <Card>
                   <ImageStep src="/step3.png" alt="Passo 3 - Valor do presente" />
-                  <Label htmlFor="giftValue">Defina o valor limite para o presente</Label>
+                  <Label htmlFor="giftValue">Qual o valor máximo do presente?</Label>
                   <PriceInput
                     id="giftValue"
                     type="number"
@@ -291,43 +312,52 @@ const App = () => {
                     onChange={(e) => setGiftValue(Number(e.target.value))}
                     placeholder="Valor do presente"
                   />
-                  <Button onClick={handleNextStep} disabled={giftValue <= 0}>
+                  <Button onClick={handleNextStep} disabled={!giftValue || giftValue <= 0}>
                     Próximo
                   </Button>
                 </Card>
               </StepContainer>
             )}
 
-            {/* Step 4: Sugestões de presentes */}
+            {/* Step 4: Definir sugestões de presentes */}
             {step === 4 && (
               <StepContainer>
                 <Card>
-                  <ImageStep src="/step4-image.png" alt="Passo 4 - Sugestões" />
-                  <Label htmlFor="suggestion">Sugira um presente para quem você vai sortear!</Label>
-                  {participants.map((participant, index) => (
-                    <Input
-                      key={index}
-                      type="text"
-                      placeholder={`Sugestão para ${participant}`}
-                      value={suggestions[index] || ''}
-                      onChange={(e) => handleSuggestionChange(index, e.target.value)}
-                    />
-                  ))}
+                  <ImageStep src="/step4.png" alt="Passo 4 - Sugestões de presentes" />
+                  <Label>Sugestões de presentes:</Label>
+                  <SuggestionContainer>
+                    {participants.map((participant, index) => (
+                      <div key={index}>
+                        <Label>Sugestão para {participant}:</Label>
+                        <Input
+                          type="text"
+                          value={suggestions[index] || ''}
+                          onChange={(e) => handleSuggestionChange(index, e.target.value)}
+                          placeholder="Sugestão de presente"
+                          isSuggestion
+                        />
+                      </div>
+                    ))}
+                  </SuggestionContainer>
                   <Button onClick={handleGenerateQRCode}>Gerar QR Code</Button>
                 </Card>
               </StepContainer>
             )}
-
-            {/* Modal QR Code */}
-            <QRCodeModal isOpen={showQRCodeModal}>
-              <QRCodeContainer>
-                <QRCodeLabel>QR Code do Sorteio:</QRCodeLabel>
-                <QRCodeCanvas value={qrCodeData} size={256} />
-                <ExplanationText>Mostre este QR Code para o seu amigo secreto!</ExplanationText>
-                <Button onClick={handleCloseQRCodeModal}>Fechar</Button>
-              </QRCodeContainer>
-            </QRCodeModal>
           </>
+        )}
+
+        {/* QR Code Modal */}
+        <QRCodeModal isOpen={showQRCodeModal}>
+          <QRCodeContainer>
+            <QRCodeLabel>QR Code do Sorteio</QRCodeLabel>
+            <QRCodeCanvas value={qrCodeData} size={200} />
+            <ExplanationText>Escaneie para ver o resultado do sorteio!</ExplanationText>
+            <Button onClick={handleCloseQRCodeModal}>Fechar</Button>
+          </QRCodeContainer>
+        </QRCodeModal>
+
+        {step >= 1 && (
+          <Button onClick={handleNewDraw}>Novo Sorteio</Button>
         )}
       </Container>
     </>
